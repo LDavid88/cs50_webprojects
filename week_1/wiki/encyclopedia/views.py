@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from markdown2 import Markdown
+from django.http import HttpResponse
 from . import util
 
 
@@ -49,3 +50,20 @@ def search(request):
             return render(request, "encyclopedia/search_list.html", {
                 "search_list": search_list
             })
+
+
+def new(request):
+    if request.method == "POST":
+        title = request.POST["add_name"].capitalize()
+        text = request.POST["txt"]
+        if title != "" and text != "" and title not in util.list_entries():
+            util.save_entry(title, text)
+            html = html_converter(title)
+            return render(request, "encyclopedia/title.html", {
+                "title": title,
+                "content": html
+            })
+        else:
+            return HttpResponse("Encyclopedia already exists.")
+
+    return render(request, "encyclopedia/new.html")
