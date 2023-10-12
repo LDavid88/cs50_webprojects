@@ -67,3 +67,21 @@ def new(request):
             return HttpResponse("Encyclopedia already exists.")
 
     return render(request, "encyclopedia/new.html")
+
+
+def edit(request, title):
+    old_text = util.get_entry(title)
+
+    if request.method == "POST":
+        new_content = request.POST["new_text"]
+        util.save_entry(title, new_content)
+        new_html = html_converter(title)
+        return render(request, "encyclopedia/title.html", {
+            "title": title,
+            "content": new_html
+        })
+
+    return render(request, "encyclopedia/edit.html", {
+        "title": title,
+        "content": old_text
+    })
