@@ -25,4 +25,7 @@ def title(request, title):
             "title": title,
             "content": content
         })
-
+    else:
+        return render(request, "encyclopedia/error.html", {
+            "title": title
+        })
