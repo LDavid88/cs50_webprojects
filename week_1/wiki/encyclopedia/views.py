@@ -29,3 +29,23 @@ def title(request, title):
         return render(request, "encyclopedia/error.html", {
             "title": title
         })
+
+
+def search(request):
+    if request.method == "POST":
+        title = request.POST["q"]
+        content = html_converter(title)
+        if content is not None:
+            return render(request, "encyclopedia/title.html", {
+                "title": title,
+                "content": content
+            })
+        else:
+            search_list = []
+            list = util.list_entries()
+            for entry in list:
+                if title.lower() in entry.lower():
+                    search_list.append(entry)
+            return render(request, "encyclopedia/search_list.html", {
+                "search_list": search_list
+            })
