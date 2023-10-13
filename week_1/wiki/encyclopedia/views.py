@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from markdown2 import Markdown
 from django.http import HttpResponse
+import random as rand
 from . import util
 
 
@@ -84,4 +85,16 @@ def edit(request, title):
     return render(request, "encyclopedia/edit.html", {
         "title": title,
         "content": old_text
+    })
+
+
+def random(request):
+    pages = util.list_entries()
+    page_selected = rand.choice(pages)
+    split = page_selected.split(".")
+    title = split[0]
+    content = html_converter(title)
+    return render(request, "encyclopedia/random.html", {
+        "title": title,
+        "content": content
     })
