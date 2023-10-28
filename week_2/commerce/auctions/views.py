@@ -8,7 +8,10 @@ from .models import User, Category, Listings
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    listings = Listings.objects.all()
+    return render(request, "auctions/index.html", {
+        "listings": listings
+    })
 
 
 def login_view(request):
@@ -87,3 +90,11 @@ def create(request):
         )
         listing.save()
         return HttpResponseRedirect(reverse(index))
+
+
+def listing(request, id):
+    if request.method == "GET":
+        listing = Listings.objects.get(pk=id)
+        return render(request, "auctions/listing.html", {
+            "listing": listing
+        })
