@@ -6,6 +6,13 @@ class User(AbstractUser):
     pass
 
 
+class Category(models.Model):
+    type = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.type}"
+
+
 class Listings(models.Model):
     title = models.CharField(max_length=25)
     description = models.CharField(max_length=100)
@@ -13,6 +20,7 @@ class Listings(models.Model):
     price = models.FloatField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
     is_active = models.BooleanField(default=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="category")
 
     def __str__(self):
         return f"{self.title}"
