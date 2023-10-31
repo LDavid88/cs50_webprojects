@@ -96,11 +96,12 @@ def listing(request, id):
     listing = Listings.objects.get(pk=id)
     user_watchlist = request.user in listing.watchlist.all()
     starting_bid = listing.price
+    bidder = request.user
     if request.method == "POST":
         new_bid = float(request.POST["newBid"])
         if new_bid >= starting_bid:
             bid = Bids(
-                bidder=request.user,
+                bidder=bidder,
                 bid=new_bid,
                 article=listing
             )
@@ -111,7 +112,8 @@ def listing(request, id):
             return HttpResponse("Bid should be equal or greater than the starting bid")
     return render(request, "auctions/listing.html", {
             "listing": listing,
-            "watchlist": user_watchlist
+            "watchlist": user_watchlist,
+            "bidder": bidder
         })
 
 

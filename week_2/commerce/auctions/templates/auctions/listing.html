@@ -25,6 +25,11 @@
         <form action="{% url 'listing' listing.id %}" method="post">
             {% csrf_token %}
             <input name="newBid" type="number" placeholder="Place Bid">
-        </form>
+        </form><br>
+    {% endif %}
+    {% if user.is_authenticated %}
+        {% if bidder == listing.user %}
+            <button name="endBid" class="btn btn-danger">End Bid</button>
+        {% endif %}
     {% endif %}
 {% endblock %}
