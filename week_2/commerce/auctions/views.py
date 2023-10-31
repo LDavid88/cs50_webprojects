@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Category, Listings
+from .models import User, Category, Listings, Bids
 
 
 def index(request):
@@ -95,6 +95,20 @@ def create(request):
 def listing(request, id):
     listing = Listings.objects.get(pk=id)
     user_watchlist = request.user in listing.watchlist.all()
+    starting_bid = listing.price
+    if request.method == "POST":
+        new_bid = float(request.POST["newBid"])
+        if new_bid >= starting_bid:
+            bid = Bids(
+                bidder=request.user,
+                bid=new_bid,
+                article=listing
+            )
+            bid.save()
+            add_watchlist(request, id)
+            return HttpResponseRedirect(reverse(index))
+        else:
+            return HttpResponse("Bid should be equal or greater than the starting bid")
     return render(request, "auctions/listing.html", {
             "listing": listing,
             "watchlist": user_watchlist
