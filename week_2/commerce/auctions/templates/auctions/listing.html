@@ -1,6 +1,24 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>{{ listing.title }}</h2>
-
+    <div class="center-web">
+        <h2>{{ listing.title }}</h2>
+        <img src="{{ listing.image }}" alt="{{ listing.title }}" height="350px">
+        <p>{{ listing.description }}</p>
+        <p>Starting Bid: ${{ listing.price }}</p>
+        <p>Owner: {{ listing.user }}</p>
+    </div><hr>
+    {% if user.is_authenticated %}
+        {% if watchlist %}
+            <form action="{% url 'removeWatchlist' listing.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Remove From Watchlist</button>
+            </form>
+        {% else %}
+            <form action="{% url 'addWatchlist' listing.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Add Watchlist</button>
+            </form>
+        {% endif %}
+    {% endif %}
 {% endblock %}
