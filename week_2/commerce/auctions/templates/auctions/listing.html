@@ -15,8 +15,13 @@
             <form action="{% url 'addWatchlist' listing.id %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary">Add to watchlist</button>
-            </form><hr>
+            </form><br>
         {% endif %}
+        <form action="{% url 'newBid' listing.id %}" method="post">
+            {% csrf_token %}
+            <input type="number" min="0" name="new_bid" placeholder="$Bid">
+            <button type="submit" class="btn btn-warning">Make a Bid</button>
+        </form><hr>
     {% endif %}
 
     <h5>Comments:</h5>
