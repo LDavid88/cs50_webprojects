@@ -125,6 +125,10 @@ def listing(request, id):
     })
 
 
+def closeAuction(request, id):
+    pass
+
+
 def addWatchlist(request, id):
     listing = Listing.objects.get(pk=id)
     user = request.user
