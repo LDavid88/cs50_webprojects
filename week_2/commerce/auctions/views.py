@@ -151,7 +151,7 @@ def newBid(request, id):
     bid = request.POST['new_bid']
     listing = Listing.objects.get(pk=id)
     user = request.user
-    if float(bid) >= listing.actual_bid.bid:
+    if float(bid) > listing.actual_bid.bid:
         update_bid = Bid(bidder=user, bid=float(bid))
         update_bid.save()
         listing.actual_bid = update_bid
