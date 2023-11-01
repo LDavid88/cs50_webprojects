@@ -102,10 +102,30 @@ def create(request):
 
 def listing(request, id):
     listing = Listing.objects.get(pk=id)
+    listing_in_watchlist = request.user in listing.watchlist.all()
     return render(request, "auctions/listing.html", {
-        'listing': listing
+        'listing': listing,
+        "watchlist": listing_in_watchlist
     })
 
 
-def addWatchlist(request):
-    pass
+def addWatchlist(request, id):
+    listing = Listing.objects.get(pk=id)
+    user = request.user
+    listing.watchlist.add(user)
+    return HttpResponseRedirect(reverse("listing", args=(id, )))
+
+
+def removeWatchlist(request, id):
+    listing = Listing.objects.get(pk=id)
+    user = request.user
+    listing.watchlist.remove(user)
+    return HttpResponseRedirect(reverse("listing", args=(id, )))
+
+
+def watchlist(request):
+    user = request.user
+    listings = user.watchlist.all()
+    return render(request, "auctions/watchlist.html", {
+        "listings": listings
+    })

@@ -6,8 +6,16 @@
     <p>{{ listing.category }}:<br> {{ listing.description }}</p>
     <h5>Bid: ${{ listing.actual_bid }}</h5>
     {% if user.is_authenticated %}
-        <form action="{% url 'addWatchlist' %}" method="post">
-            <button type="submit" class="btn btn-primary">Add to watchlist</button>
-        </form>
+        {% if watchlist %}
+            <form action="{% url 'removeWatchlist' listing.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Remove from watchlist</button>
+            </form>
+        {% else %}
+            <form action="{% url 'addWatchlist' listing.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Add to watchlist</button>
+            </form>
+        {% endif %}
     {% endif %}
 {% endblock %}
