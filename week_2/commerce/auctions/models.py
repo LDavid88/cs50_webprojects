@@ -14,10 +14,6 @@ class Bid(models.Model):
         return f"{self.bid}"
 
 
-class Comment(models.Model):
-    pass
-
-
 class Category(models.Model):
     type = models.CharField(max_length=25)
 
@@ -38,3 +34,11 @@ class Listing(models.Model):
     def __str__(self):
         return self.title
 
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="authorComment")
+    item = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name="itemComment")
+    message = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.author}"
