@@ -8,12 +8,22 @@ from .models import User, Category, Bid, Listing, Comment
 
 
 def index(request):
-    listings = Listing.objects.filter(is_active=True)
-    categories = Category.objects.all()
-    return render(request, "auctions/index.html", {
-        "listings": listings,
-        "categories": categories
-    })
+    if request.method == "POST":
+        categories = Category.objects.all()
+        categoryForm = request.POST['category']
+        category = Category.objects.get(type=categoryForm)
+        listings = Listing.objects.filter(is_active=True, category=category)
+        return render(request, "auctions/index.html", {
+            "listings": listings,
+            "categories": categories
+        })
+    else:
+        listings = Listing.objects.filter(is_active=True)
+        categories = Category.objects.all()
+        return render(request, "auctions/index.html", {
+            "listings": listings,
+            "categories": categories
+        })
 
 
 def login_view(request):
