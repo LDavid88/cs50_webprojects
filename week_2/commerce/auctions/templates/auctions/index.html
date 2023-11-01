@@ -2,15 +2,17 @@
 
 {% block body %}
     <h2>Active Listings</h2>
+    <div class="row mx-1">
     {% for listing in listings %}
         <div class="card" style="width: 18rem;">
-            <img src="{{ listing.image }}" width="250" alt="{{ listing.title }}">
+            <img src="{{ listing.image }}" width="250" height="290" alt="{{ listing.title }}">
             <div class="card-body">
                 <h5 class="card-title">{{ listing.title }}</h5>
-                <h5 class="card-title">{{ listing.actual_bid }}</h5>
+                <h5 class="card-title">${{ listing.actual_bid }}</h5>
                 <p class="card-text">{{ listing.description }}</p>
                 <a href="{% url 'listing' listing.id %}" class="btn btn-primary">Go auction</a>
             </div>
         </div>
     {% endfor %}
+    </div>
 {% endblock %}

@@ -103,9 +103,11 @@ def create(request):
 def listing(request, id):
     listing = Listing.objects.get(pk=id)
     listing_in_watchlist = request.user in listing.watchlist.all()
+    comments = Comment.objects.all()
     return render(request, "auctions/listing.html", {
         'listing': listing,
-        "watchlist": listing_in_watchlist
+        "watchlist": listing_in_watchlist,
+        "comments": comments
     })
 
 
@@ -132,7 +134,7 @@ def watchlist(request):
 
 
 def addComment(request, id):
-    user =  request.user
+    user = request.user
     listing = Listing.objects.get(pk=id)
     message = request.POST['comment']
 
@@ -142,3 +144,4 @@ def addComment(request, id):
         message=message
     )
     comment.save()
+    return HttpResponseRedirect(reverse("listing", args=(id,)))

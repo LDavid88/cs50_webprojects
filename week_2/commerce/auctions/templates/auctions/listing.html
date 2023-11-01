@@ -10,7 +10,7 @@
             <form action="{% url 'removeWatchlist' listing.id %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger">Remove from watchlist</button>
-            </form>
+            </form><hr>
         {% else %}
             <form action="{% url 'addWatchlist' listing.id %}" method="post">
                 {% csrf_token %}
@@ -19,12 +19,15 @@
         {% endif %}
     {% endif %}
 
-    <h5>Comments</h5>
+    <h5>Comments:</h5>
     {% if user.is_authenticated %}
         <form action="{% url 'addComment' listing.id %}" method="post">
             {% csrf_token %}
             <input type="text" name="comment" placeholder="Add comment">
             <button type="submit" class="btn btn-primary">Add</button>
-        </form>
+        </form><hr>
     {% endif %}
+    {% for comment in comments %}
+        <p><h6>{{ comment.author }}:</h6> {{ comment.message }}</p><hr>
+    {% endfor %}
 {% endblock %}
