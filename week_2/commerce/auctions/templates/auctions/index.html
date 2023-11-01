@@ -2,6 +2,14 @@
 
 {% block body %}
     <h2>Active Listings</h2>
+    <form>
+        <select name="category" class="form-select" aria-label="Default select example">
+            <option selected>Select category</option>
+            {% for category in categories %}
+                <option value="{{ category }}">{{ category }}</option>
+            {% endfor %}
+        </select>
+    </form><br>
     <div class="row mx-1">
     {% for listing in listings %}
         <div class="card" style="width: 18rem;">
