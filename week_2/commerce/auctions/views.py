@@ -98,3 +98,14 @@ def create(request):
         )
         listing.save()
         return HttpResponseRedirect(reverse(index))
+
+
+def listing(request, id):
+    listing = Listing.objects.get(pk=id)
+    return render(request, "auctions/listing.html", {
+        'listing': listing
+    })
+
+
+def addWatchlist(request):
+    pass

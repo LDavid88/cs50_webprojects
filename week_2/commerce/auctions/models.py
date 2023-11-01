@@ -33,6 +33,7 @@ class Listing(models.Model):
     image = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="category")
     is_active = models.BooleanField(default=True)
+    watchlist = models.ManyToManyField(User, related_name="watchlist")
 
     def __str__(self):
         return self.title
