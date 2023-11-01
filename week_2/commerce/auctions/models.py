@@ -11,7 +11,7 @@ class Bid(models.Model):
     bid = models.FloatField()
 
     def __str__(self):
-        return self.bid
+        return f"{self.bid}"
 
 
 class Comment(models.Model):
@@ -22,7 +22,7 @@ class Category(models.Model):
     type = models.CharField(max_length=25)
 
     def __str__(self):
-        return self.type
+        return f"{self.type}"
 
 
 class Listing(models.Model):
