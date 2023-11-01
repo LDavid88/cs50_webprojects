@@ -20,6 +20,14 @@
     <p>{{ listing.category }}:<br> {{ listing.description }}</p>
     <h5>Bid: ${{ listing.actual_bid }}</h5>
     {% if user.is_authenticated %}
+        {% if owner %}
+            <form action="{% url 'listing' listing.id %}" method="post">
+               {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Stop auction</button>
+            </form><br>
+        {% endif %}
+    {% endif %}
+    {% if user.is_authenticated %}
         {% if watchlist %}
             <form action="{% url 'removeWatchlist' listing.id %}" method="post">
                 {% csrf_token %}

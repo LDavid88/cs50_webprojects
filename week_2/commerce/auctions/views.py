@@ -116,10 +116,12 @@ def listing(request, id):
     listing = Listing.objects.get(pk=id)
     listing_in_watchlist = request.user in listing.watchlist.all()
     comments = Comment.objects.filter(item=listing)
+    is_owner = request.user.username == listing.owner.username
     return render(request, "auctions/listing.html", {
         'listing': listing,
         "watchlist": listing_in_watchlist,
-        "comments": comments
+        "comments": comments,
+        "owner": is_owner
     })
 
 
