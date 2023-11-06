@@ -30,7 +30,40 @@ function load_mailbox(mailbox) {
   document.querySelector('#compose-view').style.display = 'none';
 
   // Show the mailbox name
-  document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+  document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3><hr>`;
+
+  fetch(`/emails/${mailbox}`)
+  .then(response => response.json())
+  .then(emails => {
+      //iterate in each item of the dict
+      emails.forEach(email => {
+        console.log(email);
+        const email_section = document.createElement('div');
+        email_section.innerHTML = `
+        <h5>Sender: ${email["sender"]}</h5>
+        <h6>Subject: ${email["subject"]}</h6>
+        <p>Timestamp: ${email["timestamp"]}</p><hr>
+        `;
+        if (email["read"]) {
+          email_section.className = 'read'
+        } else {
+          email_section.className = 'unread'
+        }
+        email_section.addEventListener('click', function() {
+            console.log('This element has been clicked!');
+            fetch(`/emails/${email["id"]}`, {
+              method: 'PUT',
+              body: JSON.stringify({
+                  read: true
+              })
+            })
+        });
+        document.querySelector('#emails-view').append(email_section);
+      })
+        
+      });
+
+      // ... do something else with emails ...
 }
 
 function send_mail(event) {
