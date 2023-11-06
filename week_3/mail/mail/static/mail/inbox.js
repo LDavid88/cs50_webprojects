@@ -73,6 +73,12 @@ function load_mailbox(mailbox) {
           email_section.className = 'unread'
         }
         email_section.addEventListener('click', function() {
+          fetch(`/emails/${email["id"]}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                read: true
+            })
+          });
             view_email(email["id"]);
         });
         document.querySelector('#emails-view').append(email_section);
