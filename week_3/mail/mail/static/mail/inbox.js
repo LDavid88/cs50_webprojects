@@ -36,9 +36,9 @@ function load_mailbox(mailbox) {
 function send_mail(event) {
   event.preventDefault();
   
-  recipients = document.querySelector('#compose-recipients').value;
-  subject = document.querySelector('#compose-subject').value;
-  body = document.querySelector('#compose-body').value;
+  const recipients = document.querySelector('#compose-recipients').value;
+  const subject = document.querySelector('#compose-subject').value;
+  const body = document.querySelector('#compose-body').value;
 
   fetch('/emails', {
     method: 'POST',
@@ -52,5 +52,6 @@ function send_mail(event) {
   .then(result => {
       // Print result
       console.log(result);
+      load_mailbox('inbox');
   });
 }
