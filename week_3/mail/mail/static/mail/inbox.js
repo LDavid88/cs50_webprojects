@@ -36,7 +36,11 @@ function view_email(id) {
       document.querySelector('#view-email').style.display = 'block';
       
       document.querySelector('#view-email').innerHTML = `
-      Hi
+      <h5>From: ${email["sender"]}</h5>
+      <h6>Recipients: ${email["recipients"]}</h6>
+      <h6>Subject: ${email["subject"]}</h6><hr><br>
+      <p>${email["body"]}</p><hr>
+      <p>${email["timestamp"]}</p>
       `;
   });
 }
