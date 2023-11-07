@@ -3,9 +3,9 @@ textarea {
 }
 
 .read {
-    background-color: white;
+    background-color: rgb(222, 221, 221);
 }
 
 .unread {
-    background-color: rgb(222, 221, 221);
+    background-color: white;
 }
