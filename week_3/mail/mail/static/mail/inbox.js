@@ -77,6 +77,13 @@ function view_email(id) {
       btn_reply.innerHTML = 'Reply';
       btn_reply.addEventListener('click', function() {
         compose_email();
+        document.querySelector('#compose-recipients').value = email['sender'];
+        if (email['subject'].split(' ', 1) == 'Re' | email['subject'].split(' ', 1) == 're') {
+          document.querySelector('#compose-subject').value = `${email['subject']}`;
+        } else {
+          document.querySelector('#compose-subject').value = `Re: ${email['subject']}`;
+        }
+        document.querySelector('#compose-body').value = `On ${email['timestamp']} ${email['sender']} wrote: ${email['body']}`;
       });
       document.querySelector('#view-email').append(btn_reply);
   });     
