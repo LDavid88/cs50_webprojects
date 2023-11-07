@@ -42,6 +42,16 @@ function view_email(id) {
       <p>${email["body"]}</p><hr>
       <p>${email["timestamp"]}</p>
       `;
+
+      //add button
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-primary';
+      if (email["archived"]) {
+        btn.innerHTML = 'Unarchive';
+      } else {
+        btn.innerHTML = 'Archive';
+      }
+      document.querySelector('#view-email').append(btn);
   });
 }
 
