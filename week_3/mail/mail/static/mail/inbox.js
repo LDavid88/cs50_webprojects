@@ -67,10 +67,19 @@ function view_email(id) {
               archived: !email["archived"]
           })
         })
-        .then(() => load_mailbox('archive'))
+        .then(() => load_mailbox('archive'));
       });
       document.querySelector('#view-email').append(btn);
-  });
+
+      //add reply
+      const btn_reply = document.createElement('button');
+      btn_reply.className = 'btn btn-dark';
+      btn_reply.innerHTML = 'Reply';
+      btn_reply.addEventListener('click', function() {
+        compose_email();
+      });
+      document.querySelector('#view-email').append(btn_reply);
+  });     
 }
 
 function load_mailbox(mailbox) {
