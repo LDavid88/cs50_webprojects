@@ -14,16 +14,26 @@
             </div>
         </div>
     {% endif %}
-    <div class="card">
-        {% for post in posts %}
+    {% for post in page_posts %}
+        <div class="card">
             <div class="card-body">
-                <h5>{{ post.author }}</h5>
+                <h5>@{{ post.author }}</h5>
                 <blockquote class="blockquote mb-0">
                     <p>{{ post.post }}</p>
                     <footer class="blockquote-footer"> On {{ post.date }}</footer>
                 </blockquote>
                 <p>Likes: 0</p>
             </div>
-        {% endfor %}
-    </div>
+        </div>
+    {% endfor %}
+    <nav aria-label="Page navigation example">
+      <ul class="pagination d-flex justify-content-center">
+        {% if page_posts.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_posts.previous_page_number }}">Previous</a></li>
+        {% endif %}
+        {% if page_posts.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_posts.next_page_number }}">Next</a></li>
+        {% endif %}
+      </ul>
+    </nav>
 {% endblock %}
