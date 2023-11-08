@@ -5,7 +5,8 @@
         <div class="card">
             <div class="card-body">
                 <h3>New Post</h3>
-                <form>
+                <form action="{% url 'newPost' %}" method="post">
+                    {% csrf_token %}
                     <textarea class="form-control" style="height: 100px" name="newPost"></textarea><br>
                     <button class="btn btn-primary" type="submit">Post</button>
                 </form>

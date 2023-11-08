@@ -64,4 +64,6 @@ def register(request):
 
 
 def new_post(request):
+    if request.method == "POST":
+        pass
     return render(request, "network/index.html")
