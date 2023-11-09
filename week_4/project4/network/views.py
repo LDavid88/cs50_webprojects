@@ -93,5 +93,6 @@ def profile(request, user_id):
 
     return render(request, "network/profile.html", {
         "posts": posts,
-        "page_posts": page_posts
+        "page_posts": page_posts,
+        "user": user.username
     })
