@@ -81,3 +81,17 @@ def new_post(request):
         post.save()
         return HttpResponseRedirect(reverse(index))
     return render(request, "network/index.html")
+
+
+def profile(request, user_id):
+    user = User.objects.get(pk=user_id)
+    posts = Post.objects.filter(author=user).order_by("id").reverse()
+
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_posts = paginator.get_page(page_number)
+
+    return render(request, "network/profile.html", {
+        "posts": posts,
+        "page_posts": page_posts
+    })
